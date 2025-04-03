@@ -17,4 +17,6 @@ jobs:
 
       - name: Run Java Main Method
         run: |
+          mkdir -p classes/production/knights-sequence
+          javac -d "./classes/production/knights-sequence" src/org/knights/sequence/*
           java -Dfile.encoding=UTF-8 -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 32
