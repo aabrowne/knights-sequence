@@ -1,4 +1,4 @@
-package com.kcg;
+package com.knights.sequence;
 
 import java.util.ArrayList;
 import java.util.Arrays;
