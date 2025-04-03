@@ -3,7 +3,7 @@ package org.knights.sequence;
 /**
  *
  * Path
- * Created by BrowneA on 8/2/2016.
+ * Created by aabrowne on 8/2/2016.
  *
  */
 class Path implements Comparable<Character> {

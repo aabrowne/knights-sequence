@@ -3,7 +3,7 @@ package org.knights.sequence;
 /**
  *
  * HashPath
- * Created by BrowneA on 8/7/2016.
+ * Created by aabrowne on 8/7/2016.
  *
  */
 class HashPath implements Comparable<Character> {
