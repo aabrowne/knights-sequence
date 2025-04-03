@@ -1,0 +1,20 @@
+name: Run Java Main Method
+
+on: [push] # Or other events as needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Or your preferred runner
+
+    steps:
+      - uses: actions/checkout@v4 # Check out the code
+
+      - name: Set up JDK 17 # Or your desired JDK version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin' # Or your preferred distribution
+
+      - name: Run Java Main Method
+        run: |
+          java -Dfile.encoding=UTF-8 -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 32
