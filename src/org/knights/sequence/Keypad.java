@@ -1,6 +1,5 @@
 package org.knights.sequence;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -30,31 +29,8 @@ class Keypad {
     final private static Key _2 = new Key('2', Boolean.FALSE);
     final private static Key _3 = new Key('3', Boolean.FALSE);
 
-    ArrayList<Key> getKeysArrayList() {
-        ArrayList<Key> keys = new ArrayList<Key>();
-        keys.add(A.setValidMovesArrayList(new Key[] {H, L}));
-        keys.add(B.setValidMovesArrayList(new Key[] {I, K, M}));
-        keys.add(C.setValidMovesArrayList(new Key[] {F, J, L, N}));
-        keys.add(D.setValidMovesArrayList(new Key[] {G, M, O}));
-        keys.add(E.setValidMovesArrayList(new Key[] {H, N}));
-        keys.add(F.setValidMovesArrayList(new Key[] {C, M, _1}));
-        keys.add(G.setValidMovesArrayList(new Key[] {D, N, _2}));
-        keys.add(H.setValidMovesArrayList(new Key[] {A, E, K, O, _1, _3}));
-        keys.add(I.setValidMovesArrayList(new Key[] {B, L, _2}));
-        keys.add(J.setValidMovesArrayList(new Key[] {C, M, _3}));
-        keys.add(K.setValidMovesArrayList(new Key[] {B, H, _2}));
-        keys.add(L.setValidMovesArrayList(new Key[] {A, C, I, _3}));
-        keys.add(M.setValidMovesArrayList(new Key[] {B, D, F, J}));
-        keys.add(N.setValidMovesArrayList(new Key[] {C, E, G, _1}));
-        keys.add(O.setValidMovesArrayList(new Key[] {D, H, _2}));
-        keys.add(_1.setValidMovesArrayList(new Key[] {F, H, N}));
-        keys.add(_2.setValidMovesArrayList(new Key[] {G, I, K, O}));
-        keys.add(_3.setValidMovesArrayList(new Key[] {H, J, L}));
-        return keys;
-    }
-
     Set <Key> getKeysHashSet() {
-        Set <Key> keys = new LinkedHashSet<Key>();
+        Set <Key> keys = new LinkedHashSet<>();
         keys.add(A.setValidMovesHashSet(new Key[] {H, L}));
         keys.add(B.setValidMovesHashSet(new Key[] {I, K, M}));
         keys.add(C.setValidMovesHashSet(new Key[] {F, J, L, N}));
