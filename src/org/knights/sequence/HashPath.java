@@ -34,8 +34,7 @@ class HashPath implements Comparable<Character> {
             keyHash = key.hashCode();
         }
         result = 37 * result + keyHash;
-        result = 37 * result + vowelCount;
-        return result;
+        return 37 * result + vowelCount;
     }
 
     @Override
