@@ -1,6 +1,7 @@
 package org.knights.sequence;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
@@ -11,7 +12,6 @@ import java.util.TimeZone;
 /**
  *
  * Main
- *
  * Created by BrowneA on 8/2/2016.
  *
  */
@@ -27,7 +27,7 @@ public class Main {
             System.out.println("for n=" + n + ", number of valid " + n + "-key sequences is: " + validSequences);
         }
         duration = System.currentTimeMillis() - startTime;// end time for process
-        System.out.println("Took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_HALF_UP) + " seconds to complete");
+        System.out.println("Took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_UP) + " seconds to complete");
         System.out.println("done at: " + sdf.format(System.currentTimeMillis()));
     }
 
@@ -38,9 +38,9 @@ public class Main {
         Keypad keypad = new Keypad();
         switch(type) {
             case 1: {
-                Map<Path, Long> paths = new HashMap<Path, Long>();
+                Map<Path, Long> paths = new HashMap<>();
                 for (Key key : keypad.getKeysHashSet()) {
-                    Integer vowelCount;
+                    int vowelCount;
                     if (key.isVowel()) {
                         vowelCount = 1;
                     }
@@ -53,9 +53,9 @@ public class Main {
                 return getPathWithoutHashCode(paths, 1, sequence);
             }
             case 2: {
-                Map<HashPath, Long> paths = new HashMap<HashPath, Long>();
+                Map<HashPath, Long> paths = new HashMap<>();
                 for (Key key : keypad.getKeysHashSet()) {
-                    Integer vowelCount;
+                    int vowelCount;
                     if (key.isVowel()) {
                         vowelCount = 1;
                     }
@@ -82,11 +82,11 @@ public class Main {
                 numberOfPaths += pathCount;
             }
             duration = System.currentTimeMillis() - startTime;// end time for process
-            System.out.println("getPathWithoutHashCode took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_HALF_UP) + " seconds to complete");
+            System.out.println("getPathWithoutHashCode took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_UP) + " seconds to complete");
             return numberOfPaths;
         }
         long localDuration = System.currentTimeMillis();
-        HashMap<Path, Long> memoization = new HashMap<Path, Long>();// use memoization
+        HashMap<Path, Long> memoization = new HashMap<>();// use memoization
         for (Map.Entry<Path, Long> path : paths.entrySet()) {
             Path pathWithoutHashCode = path.getKey();
             Long pathCount = path.getValue();
@@ -100,19 +100,13 @@ public class Main {
                     vowelCount++;
                 }
                 Path newPathWithoutHashCode = new Path(key, vowelCount);
-                Long currentPath = memoization.get(newPathWithoutHashCode);
                 // save newPath in the memoization map
-                if (currentPath == null) {
-                    memoization.put(newPathWithoutHashCode, pathCount);
-                }
-                else {
-                    memoization.put(newPathWithoutHashCode, currentPath + pathCount);
-                }
+                memoization.merge(newPathWithoutHashCode, pathCount, Long::sum);
             }
         }
         duration = System.currentTimeMillis() - localDuration;// end time for process
-        BigDecimal interval = new BigDecimal(duration).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_HALF_DOWN);
-        if (interval.compareTo(new BigDecimal(1)) > 1) {
+        BigDecimal interval = new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_DOWN);
+        if (interval.compareTo(new BigDecimal(1)) > 0) {
             System.out.println("iteration took " + interval + " seconds to complete");
         }
         length++;
@@ -131,11 +125,11 @@ public class Main {
                 numberOfPaths += pathCount;
             }
             duration = System.currentTimeMillis() - startTime;// end time for process
-            System.out.println("getPathWithHashCode took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_HALF_UP) + " seconds to complete");
+            System.out.println("getPathWithHashCode took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_UP) + " seconds to complete");
             return numberOfPaths;
         }
         long localDuration = System.currentTimeMillis();
-        HashMap<HashPath, Long> memoization = new HashMap<HashPath, Long>();// use memoization with hash
+        HashMap<HashPath, Long> memoization = new HashMap<>();// use memoization with hash
         for (Map.Entry<HashPath, Long> counts : paths.entrySet()) {
             HashPath hashPath = counts.getKey();
             Long pathCount = counts.getValue();
@@ -148,18 +142,13 @@ public class Main {
                     vowelCount++;
                 }
                 HashPath newHashPath = new HashPath(key, vowelCount);
-                Long currentPath = memoization.get(newHashPath);
-                if (currentPath == null) {
-                    memoization.put(newHashPath, pathCount);
-                }
-                else {
-                    memoization.put(newHashPath, currentPath+pathCount);// use memoization
-                }
+                // use memoization
+                memoization.merge(newHashPath, pathCount, Long::sum);
             }
         }
         duration = System.currentTimeMillis() - localDuration;// end time for process
-        BigDecimal interval = new BigDecimal(duration).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_HALF_DOWN);
-        if (interval.compareTo(new BigDecimal(1)) > 1) {
+        BigDecimal interval = new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_DOWN);
+        if (interval.compareTo(new BigDecimal(1)) > 0) {
             System.out.println("iteration took " + interval + " seconds to complete");
         }
         length++;
@@ -176,14 +165,25 @@ public class Main {
     }
 
     private static void printMap(HashMap<?,?> map) {
-        System.out.println("Bucket entry clash print: ");
         Map<Integer, Integer> bucketClashes = null;
+        Map<Integer, Integer> hashClashes = null;
         try {
             bucketClashes = MapClashInspector.getBucketClashDistribution(map);
         }
         catch (Exception e) {
             e.printStackTrace(System.err);
         }
+        assert bucketClashes != null;
+        System.out.println("Bucket entry clash print: ");
         printClashes(bucketClashes);
+        try {
+            hashClashes = MapClashInspector.getHashClashDistribution(map);
+        }
+        catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        assert hashClashes != null;
+        System.out.println("Hash entry clash print: ");
+        printClashes(hashClashes);
     }
 }
