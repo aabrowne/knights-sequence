@@ -1,6 +1,5 @@
 package org.knights.sequence;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,17 +13,11 @@ import java.util.Set;
 class Key implements Comparable<Character> {
     final private Character key;
     final private Boolean isVowel;
-    private ArrayList<Key> movesList;
     private Set<Key> movesSet;
 
     Key(Character key, Boolean isVowel) {
         this.key = key;
         this.isVowel = isVowel;
-    }
-
-    Key setValidMovesArrayList(Key [] moves) {
-        this.movesList = new ArrayList<>(Arrays.asList(moves));
-        return this;
     }
 
     Key setValidMovesHashSet(Key [] moves) {
@@ -34,15 +27,6 @@ class Key implements Comparable<Character> {
 
     Set<Key> getMovesSet() {
         return movesSet;
-    }
-
-//    ArrayList<Key> getMovesList() {
-//        return movesList;
-//    }
-
-    @SuppressWarnings("unused")
-    char getKey() {
-        return key;
     }
 
     Boolean isVowel() {
@@ -58,7 +42,7 @@ class Key implements Comparable<Character> {
         }
         else {
             Key other = (Key) o;
-            return this.key.equals(other.key) && this.isVowel == other.isVowel && this.movesList.equals(other.movesList) && this.movesSet.equals(other.movesSet);
+            return this.key.equals(other.key) && this.isVowel == other.isVowel && this.movesSet.equals(other.movesSet);
         }
     }
 
