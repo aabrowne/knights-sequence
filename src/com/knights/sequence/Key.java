@@ -8,11 +8,10 @@ import java.util.Set;
 /**
  *
  * Key
- *
  * Created by BrowneA on 8/2/2016.
  *
  */
-class Key implements Comparable {
+class Key implements Comparable<Character> {
     final private Character key;
     final private Boolean isVowel;
     private ArrayList<Key> movesList;
@@ -24,12 +23,12 @@ class Key implements Comparable {
     }
 
     Key setValidMovesArrayList(Key [] moves) {
-        this.movesList = new ArrayList<Key>(Arrays.asList(moves));
+        this.movesList = new ArrayList<>(Arrays.asList(moves));
         return this;
     }
 
     Key setValidMovesHashSet(Key [] moves) {
-        this.movesSet = new HashSet<Key>(Arrays.asList(moves));
+        this.movesSet = new HashSet<>(Arrays.asList(moves));
         return this;
     }
 
@@ -37,9 +36,9 @@ class Key implements Comparable {
         return movesSet;
     }
 
-    ArrayList<Key> getMovesList() {
-        return movesList;
-    }
+//    ArrayList<Key> getMovesList() {
+//        return movesList;
+//    }
 
     @SuppressWarnings("unused")
     char getKey() {
@@ -64,12 +63,12 @@ class Key implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if (!(o instanceof Character)){
+    public int compareTo(Character key) {
+        if (key == null){
             return -1;
         }
         else {
-            return this.key.compareTo((Character) o);
+            return this.key.compareTo(key);
         }
     }
 }

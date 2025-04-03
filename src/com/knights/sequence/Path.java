@@ -3,11 +3,10 @@ package com.knights.sequence;
 /**
  *
  * Path
- *
  * Created by BrowneA on 8/2/2016.
  *
  */
-class Path implements Comparable {
+class Path implements Comparable<Character> {
     final private Key key;
     final private Integer vowelCount;
 
@@ -38,12 +37,12 @@ class Path implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if (!(o instanceof Path)){
+    public int compareTo(Character key) {
+        if (key == null){
             return -1;
         }
         else {
-            return this.key.compareTo(o);
+            return this.key.compareTo(key);
         }
     }
 }

@@ -3,13 +3,12 @@ package com.knights.sequence;
 /**
  *
  * HashPath
- *
  * Created by BrowneA on 8/7/2016.
  *
  */
-class HashPath implements Comparable {
+class HashPath implements Comparable<Character> {
     final private Key key;
-    private Integer vowelCount;
+    private final Integer vowelCount;
 
     HashPath(Key key, Integer vowelCount) {
         this.key = key;
@@ -26,8 +25,8 @@ class HashPath implements Comparable {
 
     @Override
     public int hashCode() {
-        Integer result = 17;
-        Integer keyHash;
+        int result = 17;
+        int keyHash;
         if (key == null) {
             keyHash = 0;
         }
@@ -53,12 +52,12 @@ class HashPath implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if (!(o instanceof HashPath)){
+    public int compareTo(Character key) {
+        if (key == null){
             return -1;
         }
         else {
-            return this.key.compareTo(o);
+            return this.key.compareTo(key);
         }
     }
 }
