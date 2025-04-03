@@ -47,8 +47,8 @@ public class Main {
                     else {
                         vowelCount = 0;
                     }
-                    Path pathWithHashCode = new Path(key, vowelCount);
-                    paths.put(pathWithHashCode, 1L);
+                    Path pathWithoutHashCode = new Path(key, vowelCount);
+                    paths.put(pathWithoutHashCode, 1L);
                 }
                 return getPathWithoutHashCode(paths, 1, sequence);
             }
@@ -62,8 +62,8 @@ public class Main {
                     else {
                         vowelCount = 0;
                     }
-                    HashPath hashPath = new HashPath(key, vowelCount);
-                    paths.put(hashPath, 1L);
+                    HashPath pathWithHashCode = new HashPath(key, vowelCount);
+                    paths.put(pathWithHashCode, 1L);
                 }
                 return getPathWithHashCode(paths, 1, sequence);
             }
