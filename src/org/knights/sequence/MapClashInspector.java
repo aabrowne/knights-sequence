@@ -1,4 +1,4 @@
-package com.knights.sequence;
+package org.knights.sequence;
 
 import java.lang.reflect.Field;
 

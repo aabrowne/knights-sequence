@@ -23,7 +23,7 @@ A knight move is made in one of the following ways:
 Your program should first write the number of valid 10-key sequences on a single line to standard out.
 
 1. In a command line window, change to directory %ZIP_ROOT%/classes/production/knights-sequence
-2. Run "java com.knights.sequence.Main option1 option2" (where option1 and option2 are described below). Example: "java com.knights.sequence.Main 2 32"
+2. Run "java org.knights.sequence.Main option1 option2" (where option1 and option2 are described below). Example: "java org.knights.sequence.Main 2 32"
 3. option1 (type) -- 1=without hash code implementation (see 5 below), 2=with hash code implementation (see 6 below)
 4. option2 (input) -- number of sequences
 5. Path.class does not implement 'public int hashCode().' HashMap used for memoization therefore 
