@@ -19,5 +19,7 @@ jobs:
         run: |
           mkdir -p classes/production/knights-sequence
           javac -d "./classes/production/knights-sequence" src/org/knights/sequence/*
-          java -Dfile.encoding=UTF-8 -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 32
-          java -Dfile.encoding=UTF-8 -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 1 14
+          java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 20
+          java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 26
+          java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 28
+          java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 32
