@@ -29,7 +29,7 @@ class Keypad {
     final private static Key _2 = new Key('2', Boolean.FALSE);
     final private static Key _3 = new Key('3', Boolean.FALSE);
 
-    Set <Key> getKeysHashSet() {
+    Set <Key> getValidMoves() {
         Set <Key> keys = new LinkedHashSet<>();
         keys.add(A.setValidMovesHashSet(new Key[] {H, L}));
         keys.add(B.setValidMovesHashSet(new Key[] {I, K, M}));

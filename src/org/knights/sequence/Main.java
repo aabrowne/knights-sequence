@@ -39,7 +39,7 @@ public class Main {
         switch(type) {
             case 1: {
                 Map<Path, Long> paths = new HashMap<>();
-                for (Key key : keypad.getKeysHashSet()) {
+                for (Key key : keypad.getValidMoves()) {
                     int vowelCount;
                     if (key.isVowel()) {
                         vowelCount = 1;
@@ -54,7 +54,7 @@ public class Main {
             }
             case 2: {
                 Map<HashPath, Long> paths = new HashMap<>();
-                for (Key key : keypad.getKeysHashSet()) {
+                for (Key key : keypad.getValidMoves()) {
                     int vowelCount;
                     if (key.isVowel()) {
                         vowelCount = 1;
