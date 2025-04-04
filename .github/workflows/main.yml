@@ -27,4 +27,4 @@ jobs:
           java -cp "./classes" org.knights.sequence.Main 1 12
           java -cp "./classes" org.knights.sequence.Main 2 26
           java -cp "./classes" org.knights.sequence.Main 2 28
-          java -clcpsspath "./classes" org.knights.sequence.Main 2 32
+          java -cp "./classes" org.knights.sequence.Main 2 32
