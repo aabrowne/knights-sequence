@@ -19,12 +19,12 @@ jobs:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin' # Or your preferred distribution
 
-      - name: Run Java Main Method
+      - name: Compile and run with and without hashcode implementations
         run: |
           mkdir -p classes/production/knights-sequence
           javac -d "./classes/production/knights-sequence" src/org/knights/sequence/*
           java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 1 10
-          java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 20
+          java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 1 12
           java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 26
           java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 28
           java -classpath "./classes/production/knights-sequence" org.knights.sequence.Main 2 32
