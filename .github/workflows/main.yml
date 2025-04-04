@@ -19,11 +19,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin' # Or your preferred distribution
-      - name: Set up JDK 17 # Or your desired JDK version
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin' # Or your preferred distribution
 
       - name: Run Java Main Method
         run: |
