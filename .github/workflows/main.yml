@@ -1,4 +1,4 @@
-name: Run Java Main Method
+name: Run test cases
 
 on: [push] # Or other events as needed
 
