@@ -8,12 +8,12 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [ 8, 11]
+        java-version: [ 8, 11 ]
 
     steps:
       - uses: actions/checkout@v4 # Check out the code
 
-      - name: Set up JDK 8 # Or your desired JDK version
+      - name: Set up JDK 8 and 11 # Or your desired JDK version
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java-version }}
