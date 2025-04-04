@@ -174,8 +174,10 @@ public class Main {
             e.printStackTrace(System.err);
         }
         assert bucketClashes != null;
+        System.out.println("#############################################");
         System.out.println("Bucket entry clash print: ");
         printClashes(bucketClashes);
+        System.out.println("#############################################");
         try {
             hashClashes = MapClashInspector.getHashClashDistribution(map);
         }
@@ -183,7 +185,9 @@ public class Main {
             e.printStackTrace(System.err);
         }
         assert hashClashes != null;
+        System.out.println("#############################################");
         System.out.println("Hash entry clash print: ");
         printClashes(hashClashes);
+        System.out.println("#############################################");
     }
 }
