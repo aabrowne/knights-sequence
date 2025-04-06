@@ -86,7 +86,7 @@ public class Main {
             return numberOfPaths;
         }
         long localDuration = System.currentTimeMillis();
-        HashMap<Path, Long> memoization = new HashMap<>();// use memoization
+        HashMap<Path, Long> memoization = new HashMap<>();// Use memoization
         for (Map.Entry<Path, Long> path : paths.entrySet()) {
             Path pathWithoutHashCode = path.getKey();
             Long pathCount = path.getValue();
@@ -99,9 +99,7 @@ public class Main {
                     }
                     vowelCount++;
                 }
-                Path newPathWithoutHashCode = new Path(key, vowelCount);
-                // save newPath in the memoization map
-                memoization.merge(newPathWithoutHashCode, pathCount, Long::sum);
+                memoization.merge(new Path(key, vowelCount), pathCount, Long::sum);// Use memoization
             }
         }
         duration = System.currentTimeMillis() - localDuration;// end time for process
@@ -129,7 +127,7 @@ public class Main {
             return numberOfPaths;
         }
         long localDuration = System.currentTimeMillis();
-        HashMap<HashPath, Long> memoization = new HashMap<>();// use memoization with hash
+        HashMap<HashPath, Long> memoization = new HashMap<>();// Use memoization
         for (Map.Entry<HashPath, Long> counts : paths.entrySet()) {
             HashPath hashPath = counts.getKey();
             Long pathCount = counts.getValue();
@@ -141,9 +139,7 @@ public class Main {
                     }
                     vowelCount++;
                 }
-                HashPath newHashPath = new HashPath(key, vowelCount);
-                // use memoization
-                memoization.merge(newHashPath, pathCount, Long::sum);
+                memoization.merge(new HashPath(key, vowelCount), pathCount, Long::sum);// Use memoization with hashcode implementation
             }
         }
         duration = System.currentTimeMillis() - localDuration;// end time for process
