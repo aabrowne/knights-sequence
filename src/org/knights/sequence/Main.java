@@ -2,10 +2,13 @@ package org.knights.sequence;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
 import java.text.SimpleDateFormat;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -35,111 +38,74 @@ public class Main {
         if (sequence <= 0){
             return 1;
         }
-        Keypad keypad = new Keypad();
-        switch(type) {
-            case 1: {
-                Map<Path, Long> paths = new HashMap<>();
-                for (Key key : keypad.getValidMoves()) {
-                    int vowelCount;
-                    if (key.isVowel()) {
-                        vowelCount = 1;
-                    }
-                    else {
-                        vowelCount = 0;
-                    }
-                    Path pathWithoutHashCode = new Path(key, vowelCount);
-                    paths.put(pathWithoutHashCode, 1L);
-                }
-                return getPathWithoutHashCode(paths, 1, sequence);
-            }
-            case 2: {
-                Map<HashPath, Long> paths = new HashMap<>();
-                for (Key key : keypad.getValidMoves()) {
-                    int vowelCount;
-                    if (key.isVowel()) {
-                        vowelCount = 1;
-                    }
-                    else {
-                        vowelCount = 0;
-                    }
-                    HashPath pathWithHashCode = new HashPath(key, vowelCount);
-                    paths.put(pathWithHashCode, 1L);
-                }
-                return getPathWithHashCode(paths, 1, sequence);
-            }
-            default: {
-                return 1;
-            }
+        if (type == 1)
+            System.out.println("Valid type: " + type);
+        else if (type == 2)
+            System.out.println("Valid type: " + type);
+        else {
+            System.err.println("Invalid type: " + type);
+            return 1;
         }
+        return getPaths(setValidMoves(new Keypad(), new HashMap<>(), type), 1, type, sequence);
     }
 
-    private static long getPathWithoutHashCode(Map <Path, Long> paths , int length, int sequence) {// without hashing, this runs out of memory at input of 10-13 (tested with 512m-2g heaps)
+    private static Map<Object, Long> setValidMoves(Keypad keypad, Map<Object, Long> paths, Integer type) {
+        for (Key key : keypad.getValidMoves()) {
+            if (type == 1)
+                paths.put(new Path(key, key.isVowel() ? 1:0), 1L);
+            else
+                paths.put(new HashPath(key, key.isVowel() ? 1:0), 1L);
+        }
+        return paths;
+    }
+
+    private static long getPaths(Map <Object, Long> paths , Integer length, Integer type, Integer sequence) {// without hashing, this runs out of memory at input of 10-13 (tested with 512m-2g heaps)
         long duration;
         long startTime = System.currentTimeMillis();// start time for process
-        if (length >= sequence){
+        if (length >= sequence) {
             long numberOfPaths = 0;
             for (Long pathCount : paths.values()) {
                 numberOfPaths += pathCount;
             }
             duration = System.currentTimeMillis() - startTime;// end time for process
-            System.out.println("getPathWithoutHashCode took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_UP) + " seconds to complete");
+            System.out.println("getPathsHashCode took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_UP) + " seconds to complete");
             return numberOfPaths;
         }
         long localDuration = System.currentTimeMillis();
-        HashMap<Path, Long> memoization = new HashMap<>();// Use memoization
-        for (Map.Entry<Path, Long> path : paths.entrySet()) {
-            Path pathWithoutHashCode = path.getKey();
+        HashMap<Object, Long> memoization = new HashMap<>();// Use memoization
+        for (Map.Entry<Object, Long> path : paths.entrySet()) {
+            HashPath    pathWithHashCode = null;
+            Path        pathWithoutHashCode = null;
+            if (type == 1)
+                pathWithoutHashCode = (Path) path.getKey();
+            else
+                pathWithHashCode = (HashPath) path.getKey();
+
             Long pathCount = path.getValue();
-            Set<Key> possibleMoveSet = path.getKey().getKey().getMovesSet();
-            for (Key key : possibleMoveSet) {
-                int vowelCount = pathWithoutHashCode.getVowelCount();
-                if (key.isVowel()){
-                    if (vowelCount >= 2){// maxVowelCount = 2
-                        continue;
-                    }
-                    vowelCount++;
-                }
-                memoization.merge(new Path(key, vowelCount), pathCount, Long::sum);// Use memoization
-            }
-        }
-        duration = System.currentTimeMillis() - localDuration;// end time for process
-        BigDecimal interval = new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_DOWN);
-        if (interval.compareTo(new BigDecimal(1)) > 0) {
-            System.out.println("iteration took " + interval + " seconds to complete");
-        }
-        length++;
-        if (length >= sequence) {
-            printMap(memoization);
-        }
-        return getPathWithoutHashCode(memoization, length, sequence);
-    }
 
-    private static long getPathWithHashCode(Map <HashPath, Long> paths , int length, int sequence) {
-        long duration;
-        long startTime = System.currentTimeMillis();// start time for process
-        if (length >= sequence){
-            long numberOfPaths = 0;
-            for (Long pathCount : paths.values()) {
-                numberOfPaths += pathCount;
-            }
-            duration = System.currentTimeMillis() - startTime;// end time for process
-            System.out.println("getPathWithHashCode took " + new BigDecimal(duration).divide(new BigDecimal(1000), 3, RoundingMode.HALF_UP) + " seconds to complete");
-            return numberOfPaths;
-        }
-        long localDuration = System.currentTimeMillis();
-        HashMap<HashPath, Long> memoization = new HashMap<>();// Use memoization
-        for (Map.Entry<HashPath, Long> counts : paths.entrySet()) {
-            HashPath hashPath = counts.getKey();
-            Long pathCount = counts.getValue();
-            for (Key key : counts.getKey().getKey().getMovesSet()) {
-                int vowelCount = hashPath.getVowelCount();
+            Set<Key> possibleMoveSet;
+            if (Objects.nonNull(pathWithoutHashCode))
+                possibleMoveSet = pathWithoutHashCode.getKey().getMovesSet();
+            else
+                possibleMoveSet = pathWithHashCode.getKey().getMovesSet();
+
+            for (Key key : possibleMoveSet) {
+                Integer vowelCount;
+                if (type == 1)
+                    vowelCount = pathWithoutHashCode.getVowelCount();
+                else
+                    vowelCount = pathWithHashCode.getVowelCount();
+
                 if (key.isVowel()){
                     if (vowelCount >= 2){// maxVowelCount = 2
                         continue;
                     }
                     vowelCount++;
                 }
-                memoization.merge(new HashPath(key, vowelCount), pathCount, Long::sum);// Use memoization with hashcode implementation
+                if (type == 1)// Use memoization
+                    memoization.merge(new Path(key, vowelCount), pathCount, Long::sum);
+                else
+                    memoization.merge(new HashPath(key, vowelCount), pathCount, Long::sum);
             }
         }
         duration = System.currentTimeMillis() - localDuration;// end time for process
@@ -151,7 +117,7 @@ public class Main {
         if (length >= sequence) {
             printMap(memoization);
         }
-        return getPathWithHashCode(memoization, length, sequence);
+        return getPaths(memoization, length, type, sequence);
     }
 
     private static void printClashes(Map<Integer, Integer> clashes) {
